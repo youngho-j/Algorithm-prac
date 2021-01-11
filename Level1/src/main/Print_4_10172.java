@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 public class Print_4_10172 {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package Main;
+package main;
 public class Print_2_10718{
     public static void main(String[] args){
         System.out.println("강한친구 대한육군");
