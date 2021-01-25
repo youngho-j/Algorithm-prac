@@ -3,7 +3,9 @@ Algorithm-prac [알고리즘 연습하기]
 
 현재 Baekjoon Online Judge 단계별로 풀기    
 **2021-01-08 ~ 진행 중**    
-[Baekjoon Online Judge](https://www.acmicpc.net/ "Baekjoon Online Judge Link")
+[Baekjoon Online Judge](https://www.acmicpc.net/ "Baekjoon Online Judge Link")  
+  
+[소스 폴더 보기](./BOJ/src/main)
 
 1. 입출력과 사칙연산
 1. if문
