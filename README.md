@@ -6,15 +6,17 @@ Algorithm-prac [알고리즘 연습하기]
 [Baekjoon Online Judge](https://www.acmicpc.net/ "Baekjoon Online Judge Link")  
   
 [소스 폴더 보기](./BOJ/src/main)
-
-1. 입출력과 사칙연산
-1. if문
-1. for문
-1. while문
-1. 1차원 배열
-1. 함수
-1. 문자열
-1. 기본 수학1 - **진행 중**
+   
+### 풀이 진행 상황
+   1. 입출력과 사칙연산
+   2. if문
+   3. for문
+   4. while문
+   5. 1차원 배열
+   6. 함수
+   7. 문자열
+   8. 기본 수학1
+   9. 기본 수학2 - **진행 중**
 
 
 
