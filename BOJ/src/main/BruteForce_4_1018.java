@@ -44,10 +44,9 @@ public class BruteForce_4_1018 {
 			String str = br.readLine();
 			for(int j = 0 ; j < M ; j++) {
 				board[i][j] = str.charAt(j);
-				System.out.println("배열 " + i +", " + j +" 체크체크 : " + str.charAt(j));
 			}
 		}
-//		비교
+//		자른 보드와 체스판 비교
 		for(int i = 0 ; i < N-7 ; i++) {
 			for(int j = 0 ; j < M-7 ; j++) {
 				check = compare(board, i, j);
@@ -56,9 +55,11 @@ public class BruteForce_4_1018 {
 				}
 			}
 		}
+//		첫시도 틀린 이유 - check를 출력하도록 해놨음.. 젠장..
 		System.out.println(paint);
 	}
 	public static int compare(char[][] board, int x, int y) {
+//		체스판 시작이 검정과 흰색일 경우 변경 개수
 		int cnt1 = 0;
 		int cnt2 = 0;
 		
