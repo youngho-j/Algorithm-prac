@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Backtracking_6_9663 {
+public class Backtracking_5_9663 {
 	
 	public static int[] arr;
 	
