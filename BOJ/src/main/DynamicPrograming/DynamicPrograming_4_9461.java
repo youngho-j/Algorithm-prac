@@ -13,7 +13,7 @@ public class DynamicPrograming_4_9461 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		StringBuilder sb = new StringBuilder();
-		
+
 		int N = Integer.parseInt(br.readLine());
 		
 		for(int i = 0 ; i < N ; i++) {
@@ -23,7 +23,7 @@ public class DynamicPrograming_4_9461 {
 		System.out.println(sb);
 	}
 	public static long result(int a) {
-		if(a >= 3 && dp[a] == 0L) {
+		if(dp[a] == -1) {
 			dp[a] = result(a-3) + result(a-2);
 		}
 		return dp[a];
@@ -33,5 +33,9 @@ public class DynamicPrograming_4_9461 {
 		dp[1] = 1;
 		dp[2] = 1;
 		dp[3] = 1;
+//		배열을 생성시 빈값이 무슨 값이 들어있는지 모르므로 초기화를 해주는게 좋음
+		for(int i = 4 ; i < 101 ; i++) {
+			dp[i] = -1;
+		}
 	}
 }
