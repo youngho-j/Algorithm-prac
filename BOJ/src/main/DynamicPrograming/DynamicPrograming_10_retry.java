@@ -28,7 +28,7 @@ public class DynamicPrograming_10_retry {
 		if(n > 1) {
 			dp[2] = arr[1] + arr[2];
 		}
-		//테스트.. 안올라가는데;;
+		//클로벌 변경 후 다시 시도
 		System.out.println(find(n));
 		br.close();
 	}
