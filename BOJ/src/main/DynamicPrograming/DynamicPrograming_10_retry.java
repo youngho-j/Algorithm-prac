@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class DynamicPrograming_10_retry {
-	
+	// 깃 로컬 추가 후 다시 시도 
 	static int[] arr;
 	static int[] dp;
 	
@@ -28,7 +28,7 @@ public class DynamicPrograming_10_retry {
 		if(n > 1) {
 			dp[2] = arr[1] + arr[2];
 		}
-		//무슨 문제인지 1도 모르겠다.. 
+		
 		System.out.println(find(n));
 		br.close();
 	}
