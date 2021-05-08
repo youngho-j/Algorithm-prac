@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class DynamicPrograming_11_11054 {
+public class DynamicPrograming_12_11054 {
 	
 	private static int N;
 	private static int[] arr;
