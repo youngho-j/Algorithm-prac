@@ -3,6 +3,11 @@ package main.BreadthFirstSearch;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BreadthFirstSearch_g_16236_1 {
@@ -53,12 +58,23 @@ public class BreadthFirstSearch_g_16236_1 {
 	*/
 	
 	private static int N;
-	private static int answer;
-	
+	// 상어 초기 사이즈
+	private static int size = 2;
+	// 상어가 먹이를 먹은 횟수
+	private static int eaten = 0;
+	// 지도 배열
 	private static int[][] map;
+	// 방문 배열
 	private static boolean[][] isVisit;
 	
+	//상어에 대한 정보를 담은 클래스 
 	private static Fishs babyShark;
+	//먹이 배열
+	private static ArrayList<Fishs> feed = new ArrayList<Fishs>();
+	
+	//상하 좌우 이동을 위한 배열
+	private static int[] upDown = {-1, 1, 0, 0};
+	private static int[] leftRight = {0, 0, -1, 1};
 	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -73,6 +89,7 @@ public class BreadthFirstSearch_g_16236_1 {
 			st = new StringTokenizer(br.readLine(), " ");
 			for(int j = 0 ; j < N ; j++) {
 				map[i][j] = Integer.parseInt(st.nextToken());
+				// 상어의 위치를 변수에 담은 뒤 해당 공간 빈 공간으로 표시
 				if(map[i][j] == 9) {
 					babyShark = new Fishs(i, j, 0);
 					map[i][j] = 0;
@@ -80,15 +97,120 @@ public class BreadthFirstSearch_g_16236_1 {
 			}
 		}
 		
+		growShark();
+		
+		System.out.println(babyShark.distance);
+	}
+	
+	public static void growShark() {
+		//상어의 변경되는 위치를 담아줄 큐
+		Queue<Fishs> qu = new LinkedList<Fishs>();
+		// 상어의 위치 확인
+		qu.add(babyShark);
+		isVisit[babyShark.x][babyShark.y] = true;
+		
+		while(true) {
+			while(!qu.isEmpty()) {
+				Fishs shark = qu.poll();
+				int dis = shark.distance;
+				//상어 주변 먹을 수 있는 물고기 탐색
+				for(int i = 0 ; i < 4 ; i++) {
+					int xx = shark.x + upDown[i];
+					int yy = shark.y + leftRight[i];
+					// 지도에서 벗어나지 않고 방문을 하지 않았던 경우
+					if((xx >= 0 && yy >= 0 && xx < N && yy < N) && !isVisit[xx][yy]) {
+						//먹을 수 있는 물고기 발견
+						if(map[xx][yy] < 2 && map[xx][yy] != 0) {
+							qu.add(new Fishs(xx, yy, dis + 1));
+							isVisit[xx][yy] = true;
+							feed.add(new Fishs(xx, yy, dis + 1));
+						}
+						//이동만 가능(사이즈가 같거나 빈공간인경우)
+						if(map[xx][yy] == size || map[xx][yy] == 0) {
+							qu.add(new Fishs(xx, yy, dis + 1));
+							isVisit[xx][yy] = true;
+						}
+					}
+				}
+			}
+			if(!feed.isEmpty()) {
+				//물고기 먹기
+				eatFish();
+				//먹은 상어의 위치가 변경되므로 상어의 이동 관련 큐와 방문 배열을 초기화
+				qu.clear();
+				isVisit = new boolean[N][N];
+				//물고기 먹은 뒤 위치 상어 이동 큐에 추가 후 방문 상태로 변경
+				qu.add(babyShark);
+				isVisit[babyShark.x][babyShark.y] = true;
+			} else {
+				return;
+			}
+		}
+	}
+	public static void eatFish() {
+		//물고기를 먹기 전 조건과 일치해야하으로 먹이 배열을 역 또는 순 정렬 필요
+		Collections.sort(feed, new Comparator<Fishs>() {
+			@Override
+			public int compare(Fishs o1, Fishs o2) {
+				//이동 거리가 같을 경우
+				if(o1.distance == o2.distance) {
+					//같은 라인에 존재할 경우
+					if(o1.x == o2.x) {
+						// 좌측에 있는 물고기를 먼저 먹을 수 있도록 정렬
+						if(o1.y > o2.y) {
+							return 1;
+						} else {
+							return -1;
+						}
+					//같은 라인에 존재하지 않을 경우
+					} else {
+						// 더 높은 라인에 있는 물고기를 먼저 먹을 수 있도록 정렬
+						if(o1.x > o2.x) {
+							return 1;
+						} else {
+							return -1;
+						}
+					}
+				//이동 거리가 o1이 큰경우
+				} else if(o1.distance > o2.distance) {
+					//오름차순 정렬
+					return 1;
+				// 그외의 경우
+				} else {
+					//배열 유지
+					return -1;					
+				}
+			};
+		});
+		//정렬을 마친 뒤 가장 우선 순위가 높은 물고기를 가져옴
+		Fishs first = feed.get(0);
+		
+		//먹이의 위치로 이동
+		babyShark.x = first.x;
+		babyShark.y = first.y;
+		//먹은 시간 추가 
+		babyShark.distance += first.distance;
+		
+		//먹이를 먹은 뒤 상어 사이즈 조건 체크
+		if(++eaten == size) {
+			size++;
+			eaten = 0;
+		}
+		
+		// 먹은 자리를 빈공간으로 처리
+		map[first.x][first.y] = 0;
+		
+		// 먹이를 먹기위해 이동한 자리부터 다시 좌표를 구해야하므로 배열 초기화 
+		feed.clear();
 	}
 }
 
 class Fishs {
-	int x, y, location;
+	int x, y, distance;
 
-	public Fishs(int x, int y, int location) {
+	public Fishs(int x, int y, int distance) {
 		this.x = x;
 		this.y = y;
-		this.location = location;
+		this.distance = distance;
 	}	
 }
